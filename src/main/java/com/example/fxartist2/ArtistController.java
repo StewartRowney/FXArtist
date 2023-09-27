@@ -5,13 +5,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ArtistController {
 
-    private ArtistUI ui = new ArtistUI(this);
+    private IArtistView ui = new ArtistView(this);
 
     public void run(Stage stage){
         ui.start(stage);

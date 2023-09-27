@@ -1,6 +1,5 @@
 package com.example.fxartist2;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -13,9 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class ArtistUI{
+public class ArtistView implements IArtistView {
 
     private final ArtistController controller;
     private final TextField txtUserInput = new TextField();
@@ -23,7 +20,7 @@ public class ArtistUI{
     private final Text txtArtistOutput = new Text();
     private Stage stage;
 
-    public ArtistUI(ArtistController controller) {
+    public ArtistView(ArtistController controller) {
         this.controller = controller;
     }
 
