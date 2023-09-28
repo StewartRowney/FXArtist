@@ -10,33 +10,16 @@ import java.util.Scanner;
 
 public class ArtistController {
 
-    private IArtistView ui = new ArtistView(this);
+    private final ArtistView ui = new ArtistView(this);
+    private final ArtistFactory factory = new ArtistFactory();
 
     public void run(Stage stage){
         ui.start(stage);
     }
 
-    public boolean readFileInputAndDisplayArt(String userInput) {
-        return draw(String.format("src/main/resources/%s.txt", userInput));
-    }
-    public boolean draw(String filePath) {
-        StringBuilder art = new StringBuilder();
-        try (Scanner fileScanner = new Scanner(new File(filePath))) {
-            while (fileScanner.hasNextLine()) {
-                art.append(fileScanner.nextLine()).append("\n");
-            }
-            ui.showArt(art.toString(), true);
-            return true;
-        } catch (FileNotFoundException fnfe) {
-            ui.showArt("Sorry, I cannot draw that", false);
-            return false;
-        }
+    public void draw(String artistName, String art) {
+        IArtist artist = factory.generateArtist(artistName);
+        ui.showArt(artist, artist.draw(art));
     }
 
-    public void displayFolder(){
-        File actual = new File("src/main/resources");
-        for( File f : Objects.requireNonNull(actual.listFiles())){
-            System.out.println( f.getName() );
-        }
-    }
 }

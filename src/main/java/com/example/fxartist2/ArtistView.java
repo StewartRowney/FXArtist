@@ -9,10 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ArtistView implements IArtistView {
+public class ArtistView {
 
     private final ArtistController controller;
     private final TextField txtUserInput = new TextField();
@@ -28,6 +29,14 @@ public class ArtistView implements IArtistView {
 
         this.stage = newStage;
 
+        Group group = setUpUI();
+
+        stage.setTitle("Artist");
+        stage.setScene(new Scene(group));
+        stage.show();
+    }
+
+    public Group setUpUI() {
         Group group = new Group();
         VBox vbox = generateFormattedVBox();
 
@@ -41,7 +50,7 @@ public class ArtistView implements IArtistView {
 
         Button btnShowArt = new Button("Click me");
         btnShowArt.setOnAction(e -> {
-            controller.readFileInputAndDisplayArt(txtUserInput.getText());
+            controller.draw(txtArtistName.getText(), txtUserInput.getText());
         });
 
         HBox hBoxArtistOutput = generateFormattedHBox();
@@ -49,21 +58,19 @@ public class ArtistView implements IArtistView {
 
         vbox.getChildren().addAll(hBoxArtistName, hBoxUserInput, btnShowArt, hBoxArtistOutput);
         group.getChildren().add(vbox);
-
-        stage.setTitle("Artist");
-        stage.setScene(new Scene(group));
-        stage.show();
+        return group;
     }
 
-    public void showArt(String art, boolean includeSignature) {
-        if (includeSignature) {
+    public void showArt(IArtist artist, String art) {
+        if (!art.isEmpty()) {
             art += "\n " + txtArtistName.getText();
         }
         txtArtistOutput.setText(art);
+        txtArtistOutput.setFill(artist.getColour());
         stage.sizeToScene();
     }
 
-    private static VBox generateFormattedVBox() {
+    private VBox generateFormattedVBox() {
         VBox vbox = new VBox(10);
         vbox.setPrefWidth(320);
         vbox.setAlignment(Pos.CENTER);
@@ -71,7 +78,7 @@ public class ArtistView implements IArtistView {
         return vbox;
     }
 
-    private static HBox generateFormattedHBox() {
+    private HBox generateFormattedHBox() {
         HBox hBox = new HBox(5);
         hBox.setPrefWidth(320);
         hBox.setAlignment(Pos.CENTER);

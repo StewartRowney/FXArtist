@@ -1,5 +1,6 @@
-package com.example.fxartist2;
+package com.example.fxartist2.artists;
 
+import com.example.fxartist2.ArtistController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
